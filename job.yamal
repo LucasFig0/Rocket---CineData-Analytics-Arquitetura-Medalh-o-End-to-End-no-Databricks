@@ -1,0 +1,33 @@
+resources:
+  jobs:
+    CineData_Medallion_Pipeline:
+      name: CineData_Medallion_Pipeline
+      description: Orquestração do pipeline de dados CineData Analytics (RocketLab
+        2026.2). Executa o fluxo integral da Arquitetura Medalhão, assegurando a
+        ingestão de catálogo e cotações cambiais do BACEN, higienização rigorosa
+        com PySpark, modelação dimensional em esquema em estrela com
+        tabelas-ponte e geração de base de contexto para assistente de IA.
+      schedule:
+        quartz_cron_expression: 58 0 5 * * ?
+        timezone_id: America/Sao_Paulo
+        pause_status: UNPAUSED
+      tasks:
+        - task_key: to_Bronze
+          notebook_task:
+            notebook_path: /Workspace/Users/fig.lucas2004@gmail.com/Cinedata_proj_Rocket/Landing_to_Bronze
+            source: WORKSPACE
+        - task_key: to_Silver
+          depends_on:
+            - task_key: to_Bronze
+          notebook_task:
+            notebook_path: /Workspace/Users/fig.lucas2004@gmail.com/Cinedata_proj_Rocket/Bronze_to_Silver
+            source: WORKSPACE
+        - task_key: to_Gold
+          depends_on:
+            - task_key: to_Silver
+          notebook_task:
+            notebook_path: /Workspace/Users/fig.lucas2004@gmail.com/Cinedata_proj_Rocket/Silver_to_Gold
+            source: WORKSPACE
+      queue:
+        enabled: true
+      performance_target: PERFORMANCE_OPTIMIZED
