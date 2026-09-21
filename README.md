@@ -1,0 +1,2 @@
+# Rocket---CineData-Analytics-Arquitetura-Medalh-o-End-to-End-no-Databricks
+Este repositório contém a implementação do pipeline analítico e de engenharia de dados da plataforma CineData Analytics. O projeto foi construído sobre a plataforma Databricks, tirando partido do PySpark, Delta Lake, Unity Catalog e Databricks Workflows para desenhar uma solução escalável, idempotente e governada com base na Arquitetura Medalhão
